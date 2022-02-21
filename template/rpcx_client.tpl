@@ -7,8 +7,8 @@ type {{.ServiceName}}ClientInterface interface {
 	{{- end}}
 }
 
-func New{{.ServiceName}}Client(etcdAddrs []string, timeout time.Duration) {{.ServiceName}}ClientInterface {
-	c := client.New(serverName, etcdAddrs, timeout)
+func New{{.ServiceName}}Client(etcdAddrs []string, timeout time.Duration, etcdBasePath string) {{.ServiceName}}ClientInterface {
+	c := client.New(serverName, etcdAddrs, timeout, etcdBasePath)
 
 	return &{{.ServiceName}}Client{
 		c: c,
@@ -23,7 +23,7 @@ type {{.ServiceName}}Client struct {
 func (c *{{$root.ServiceName}}Client) {{$m.MethodName}}(ctx context.Context, 
 	in *{{$m.InputTypeName}}) (*{{$m.OutputTypeName}}, error) {
     out := new({{$m.OutputTypeName}})
-	err := c.c.Call("{{$root.ServiceName}}.{{$m.MethodName}}", in, out)
+	err := c.c.Call(ctx, "{{$root.ServiceName}}.{{$m.MethodName}}", in, out)
     return out, err
 }
 {{end}}

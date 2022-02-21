@@ -35,8 +35,8 @@ type PackClientInterface interface {
 	Signin(*SigninReq, *SigninRes) error
 }
 
-func NewPackClient(etcdAddrs []string, timeout time.Duration) PackClientInterface {
-	c := client.New(serverName, etcdAddrs, timeout)
+func NewPackClient(etcdAddrs []string, timeout time.Duration, etcdBasePath string) PackClientInterface {
+	c := client.New(serverName, etcdAddrs, timeout, etcdBasePath)
 
 	return &PackClient{
 		c: c,
@@ -50,7 +50,7 @@ type PackClient struct {
 func (c *PackClient) Signin(ctx context.Context,
 	in *SigninReq) (*SigninRes, error) {
 	out := new(SigninRes)
-	err := c.c.Call("Pack.Signin", in, out)
+	err := c.c.Call(ctx, "Pack.Signin", in, out)
 	return out, err
 }
 
@@ -62,8 +62,8 @@ func RegisterPackService(s *service.ServerManage, hdlr PackServiceInterface) err
 	return s.RegisterOneService(serverName, hdlr)
 }
 
-func NewPackServiceAndRun(listenAddr, exposeAddr string, etcdAddrs []string, handler PackServiceInterface) (*service.ServerManage, error) {
-	s, err := service.New(exposeAddr, etcdAddrs)
+func NewPackServiceAndRun(listenAddr, exposeAddr string, etcdAddrs []string, handler PackServiceInterface, etcdBasePath string) (*service.ServerManage, error) {
+	s, err := service.New(exposeAddr, etcdAddrs, etcdBasePath)
 	if err != nil {
 		return nil, err
 	}

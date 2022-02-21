@@ -10,8 +10,8 @@ func Register{{.ServiceName}}Service(s *service.ServerManage, hdlr {{.ServiceNam
     return s.RegisterOneService(serverName, hdlr)
 }
 
-func New{{.ServiceName}}ServiceAndRun(listenAddr, exposeAddr string, etcdAddrs []string, handler {{.ServiceName}}ServiceInterface) (*service.ServerManage, error) {
-    s, err := service.New(exposeAddr, etcdAddrs)
+func New{{.ServiceName}}ServiceAndRun(listenAddr, exposeAddr string, etcdAddrs []string, handler {{.ServiceName}}ServiceInterface, etcdBasePath string) (*service.ServerManage, error) {
+    s, err := service.New(exposeAddr, etcdAddrs, etcdBasePath)
 	if err != nil {
 		return nil, err
 	}
