@@ -11,10 +11,8 @@ import (
 
 import (
 	context "context"
-	"encoding/json"
 	client "gitee.com/mimis/golang-tool/rpcx/client"
 	service "gitee.com/mimis/golang-tool/rpcx/service"
-	"reflect"
 	"time"
 )
 
@@ -32,7 +30,7 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 var serverName string = "pack"
 
 type PackClientInterface interface {
-	Signin(*SigninReq, *SigninRes) error
+	Signin(context.Context, *SigninReq) (*SigninRes, error)
 }
 
 func NewPackClient(etcdAddrs []string, timeout time.Duration, etcdBasePath string) PackClientInterface {
