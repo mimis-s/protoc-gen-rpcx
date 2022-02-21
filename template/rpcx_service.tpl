@@ -2,7 +2,7 @@
 
 type {{.ServiceName}}ServiceInterface interface {
 	{{- range $_, $m := .MethodList}}
-	{{$m.MethodName}}(*{{$m.InputTypeName}}, *{{$m.OutputTypeName}}) error
+	{{$m.MethodName}}(context.Context, *{{$m.InputTypeName}}, *{{$m.OutputTypeName}}) error
 	{{- end}}
 }
 

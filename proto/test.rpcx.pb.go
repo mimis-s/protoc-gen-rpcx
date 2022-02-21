@@ -53,7 +53,7 @@ func (c *PackClient) Signin(ctx context.Context,
 }
 
 type PackServiceInterface interface {
-	Signin(*SigninReq, *SigninRes) error
+	Signin(context.Context, *SigninReq, *SigninRes) error
 }
 
 func RegisterPackService(s *service.ServerManage, hdlr PackServiceInterface) error {
