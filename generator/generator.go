@@ -73,7 +73,6 @@ var plugins []Plugin
 // It is typically called during initialization.
 func RegisterPlugin(p Plugin) {
 	plugins = append(plugins, p)
-	log.Printf("注册插件len[%v]\n", len(plugins))
 }
 
 // A GoImportPath is the import path of a Go package. e.g., "google.golang.org/genproto/protobuf".
@@ -296,7 +295,7 @@ func (d *FileDescriptor) goFileName(pathType pathType) string {
 	if ext := path.Ext(name); ext == ".proto" || ext == ".protodevel" {
 		name = name[:len(name)-len(ext)]
 	}
-	name += ".pb.go"
+	name += ".rpcx.pb.go"
 
 	if pathType == pathTypeSourceRelative {
 		return name
@@ -446,7 +445,7 @@ func (g *Generator) Fail(msgs ...string) {
 // in the parameter (a member of the request protobuf) into a key/value map.
 // It then sets file name mappings defined by those entries.
 func (g *Generator) CommandLineParameters(parameter string) {
-	log.Printf("CommandLineParameters before[%v] parameter[%v]", len(plugins), parameter)
+
 	g.Param = make(map[string]string)
 	for _, p := range strings.Split(parameter, ",") {
 		if i := strings.Index(p, "="); i < 0 {
@@ -500,7 +499,6 @@ func (g *Generator) CommandLineParameters(parameter string) {
 		}
 		plugins = nplugins
 	}
-	log.Printf("CommandLineParameters after[%v]", len(plugins))
 }
 
 // DefaultPackageName returns the package name printed for the object.
@@ -1086,14 +1084,14 @@ func (g *Generator) GenerateAllFiles() {
 			Name:    proto.String(fname),
 			Content: proto.String(g.String()),
 		})
-		if g.annotateCode {
-			// Store the generated code annotations in text, as the protoc plugin protocol requires that
-			// strings contain valid UTF-8.
-			g.Response.File = append(g.Response.File, &plugin.CodeGeneratorResponse_File{
-				Name:    proto.String(file.goFileName(g.pathType) + ".meta"),
-				Content: proto.String(proto.CompactTextString(&descriptor.GeneratedCodeInfo{Annotation: g.annotations})),
-			})
-		}
+		// if g.annotateCode {
+		// 	// Store the generated code annotations in text, as the protoc plugin protocol requires that
+		// 	// strings contain valid UTF-8.
+		// 	g.Response.File = append(g.Response.File, &plugin.CodeGeneratorResponse_File{
+		// 		Name:    proto.String(file.goFileName(g.pathType) + ".meta"),
+		// 		Content: proto.String(proto.CompactTextString(&descriptor.GeneratedCodeInfo{Annotation: g.annotations})),
+		// 	})
+		// }
 	}
 }
 
@@ -1126,28 +1124,28 @@ func (g *Generator) generate(file *FileDescriptor) {
 	for _, td := range g.file.imp {
 		g.generateImported(td)
 	}
-	for _, enum := range g.file.enum {
-		g.generateEnum(enum)
-	}
-	for _, desc := range g.file.desc {
-		// Don't generate virtual messages for maps.
-		if desc.GetOptions().GetMapEntry() {
-			continue
-		}
-		g.generateMessage(desc)
-	}
-	for _, ext := range g.file.ext {
-		g.generateExtension(ext)
-	}
+	// for _, enum := range g.file.enum {
+	// 	g.generateEnum(enum)
+	// }
+	// for _, desc := range g.file.desc {
+	// 	// Don't generate virtual messages for maps.
+	// 	if desc.GetOptions().GetMapEntry() {
+	// 		continue
+	// 	}
+	// 	g.generateMessage(desc)
+	// }
+	// for _, ext := range g.file.ext {
+	// 	g.generateExtension(ext)
+	// }
 	g.generateInitFunction()
-	g.generateFileDescriptor(file)
+	// g.generateFileDescriptor(file)
 
 	// Run the plugins before the imports so we know which imports are necessary.
 	g.runPlugins(file)
 
 	// Generate header and imports last, though they appear first in the output.
 	rem := g.Buffer
-	remAnno := g.annotations
+	// remAnno := g.annotations
 	g.Buffer = new(bytes.Buffer)
 	g.annotations = nil
 	g.generateHeader()
@@ -1156,20 +1154,20 @@ func (g *Generator) generate(file *FileDescriptor) {
 		return
 	}
 	// Adjust the offsets for annotations displaced by the header and imports.
-	for _, anno := range remAnno {
-		*anno.Begin += int32(g.Len())
-		*anno.End += int32(g.Len())
-		g.annotations = append(g.annotations, anno)
-	}
+	// for _, anno := range remAnno {
+	// 	*anno.Begin += int32(g.Len())
+	// 	*anno.End += int32(g.Len())
+	// 	g.annotations = append(g.annotations, anno)
+	// }
 	g.Write(rem.Bytes())
 
 	// Reformat generated code and patch annotation locations.
 	fset := token.NewFileSet()
 	original := g.Bytes()
-	if g.annotateCode {
-		// make a copy independent of g; we'll need it after Reset.
-		original = append([]byte(nil), original...)
-	}
+	// if g.annotateCode {
+	// 	// make a copy independent of g; we'll need it after Reset.
+	// 	original = append([]byte(nil), original...)
+	// }
 	fileAST, err := parser.ParseFile(fset, "", original, parser.ParseComments)
 	if err != nil {
 		// Print out the bad code with line numbers.

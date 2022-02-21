@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package proto;
+
+
+service Pack {
+    rpc Signin(SigninReq) returns(SigninRes) {};
+}
+
+message SigninReq {
+    int64 ID = 1;
+}
+
+message SigninRes {
+    int64 ID = 1;
+}
