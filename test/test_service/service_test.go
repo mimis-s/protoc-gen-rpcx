@@ -21,8 +21,9 @@ type Server struct {
 	S *service.ServerManage
 }
 
-func (s *Server) Signin(context.Context, *proto.SigninReq, *proto.SigninRes) error {
-	fmt.Printf("签到成功\n")
+func (s *Server) Signin(ctx context.Context, req *proto.SigninReq, res *proto.SigninRes) error {
+	fmt.Printf("签到成功ID:%v\n", req.ID)
+	res.ID = req.ID + 1
 	return nil
 }
 

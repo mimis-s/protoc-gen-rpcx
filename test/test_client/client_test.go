@@ -29,7 +29,8 @@ func Init() (*ServiceClient, error) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("客户端返回%v\n", signinRes)
+	fmt.Printf("签到成功ID:%v\n", signinRes.ID)
+
 	return s, nil
 }
 

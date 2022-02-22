@@ -23,7 +23,7 @@ type {{.ServiceName}}Client struct {
 func (c *{{$root.ServiceName}}Client) {{$m.MethodName}}(ctx context.Context, 
 	in *{{$m.InputTypeName}}) (*{{$m.OutputTypeName}}, error) {
     out := new({{$m.OutputTypeName}})
-	err := c.c.Call(ctx, "{{$root.ServiceName}}.{{$m.MethodName}}", in, out)
+	err := c.c.Call(ctx, "{{$m.MethodName}}", in, out)
     return out, err
 }
 {{end}}
