@@ -1,16 +1,24 @@
 package plugin
 
 import (
-	"bytes"
-	"fmt"
-	"html/template"
+	"os"
+	"os/exec"
 	"path"
+	"path/filepath"
 	"strconv"
+	"strings"
 
 	"gitee.com/mimis/protoc-gen-rpcx/generator"
 
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
 )
+
+func GetPath() string {
+	file, _ := exec.LookPath(os.Args[0])
+	path, _ := filepath.Abs(file)
+	index := strings.LastIndex(path, string(os.PathSeparator))
+	return path[:index]
+}
 
 const (
 	//apiPkgPath     = "github.com/joymicro/go-joymicro/v3/api"
@@ -23,7 +31,6 @@ var (
 	contextPkg string
 	clientPkg  string
 	serverPkg  string
-	pkgImports map[generator.GoPackageName]bool
 )
 
 // 定义服务和接口描述结构
@@ -55,40 +62,40 @@ func (p *netrpcPlugin) buildServiceSpec(svc *descriptor.ServiceDescriptorProto) 
 
 // 自定义方法，生成导入代码
 func (p *netrpcPlugin) genServiceCode(svc *descriptor.ServiceDescriptorProto) {
-	spec := p.buildServiceSpec(svc)
+	// spec := p.buildServiceSpec(svc)
 
 	// 客户端
 	{
-		var buf bytes.Buffer
-		t, err := template.ParseFiles("./template/rpcx_client.tpl")
-		if err != nil {
-			fmt.Printf("template.ParseFiles is err:%v\n", err)
-			return
-		}
+		// var buf bytes.Buffer
+		// t, err := template.ParseFiles(GetPath() + "/template/rpcx_client.tpl")
+		// if err != nil {
+		// 	fmt.Printf("template.ParseFiles is err:%v\n", err)
+		// 	return
+		// }
 
-		err = t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
-		if err != nil {
-			fmt.Printf("Execute is err:%v\n", err)
-			return
-		}
-		p.P(buf.String()) // 把模板的内容写入生成的proto文件里面
+		// err = t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
+		// if err != nil {
+		// 	fmt.Printf("Execute is err:%v\n", err)
+		// 	return
+		// }
+		// p.P(buf.String()) // 把模板的内容写入生成的proto文件里面
 	}
 
 	// 服务器
 	{
-		var buf bytes.Buffer
-		t, err := template.ParseFiles("./template/rpcx_service.tpl")
-		if err != nil {
-			fmt.Printf("template.ParseFiles is err:%v\n", err)
-			return
-		}
+		// var buf bytes.Buffer
+		// t, err := template.ParseFiles(GetPath() + "/template/rpcx_service.tpl")
+		// if err != nil {
+		// 	fmt.Printf("template.ParseFiles is err:%v\n", err)
+		// 	return
+		// }
 
-		err = t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
-		if err != nil {
-			fmt.Printf("Execute is err:%v\n", err)
-			return
-		}
-		p.P(buf.String()) // 把模板的内容写入生成的proto文件里面
+		// err = t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
+		// if err != nil {
+		// 	fmt.Printf("Execute is err:%v\n", err)
+		// 	return
+		// }
+		// p.P(buf.String()) // 把模板的内容写入生成的proto文件里面
 	}
 
 }

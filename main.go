@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"gitee.com/mimis/protoc-gen-rpcx/generator"
-
 	_ "gitee.com/mimis/protoc-gen-rpcx/plugin"
 	"github.com/golang/protobuf/proto"
 )
