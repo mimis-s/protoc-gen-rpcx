@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	listenAddr string   = ":8848"
-	exposeAddr string   = ":8919"
-	etcdAddrs  []string = []string{":8379"}
+	listenAddr string   = "localhost:8578"
+	addr       string   = "localhost:8579"
+	etcdAddrs  []string = []string{"192.168.1.165:2379"}
 	isLocal    bool     = false
 )
 
@@ -28,7 +28,7 @@ func (s *Server) Signin(context.Context, *proto.SigninReq, *proto.SigninRes) err
 
 func Init() *Server {
 	s := new(Server)
-	sManager, err := service.NewPackHandlerAndRun(listenAddr, exposeAddr, etcdAddrs, s, isLocal)
+	sManager, err := proto.NewPackServiceAndRun(listenAddr, addr, etcdAddrs, s, "")
 	if err != nil {
 		panic(err)
 	}

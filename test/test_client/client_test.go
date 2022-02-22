@@ -6,21 +6,20 @@ import (
 	"testing"
 	"time"
 
-	"gitee.com/mimis/golang-tool/rpcx/service"
 	"gitee.com/mimis/protoc-gen-rpcx/proto"
 )
 
 var (
-	etcdAddrs []string = []string{":8789"}
+	etcdAddrs []string = []string{"192.168.1.165:2379"}
 )
 
 type ServiceClient struct {
-	Pack service.PackServiceInterface
+	Pack proto.PackClientInterface
 }
 
 func Init() (*ServiceClient, error) {
 	s := new(ServiceClient)
-	pack := service.NewPackService(etcdAddrs, time.Minute, false, true)
+	pack := proto.NewPackClient(etcdAddrs, time.Minute, "")
 	s.Pack = pack
 
 	signinReq := &proto.SigninReq{
@@ -35,5 +34,5 @@ func Init() (*ServiceClient, error) {
 }
 
 func TestClient(t *testing.T) {
-
+	Init()
 }

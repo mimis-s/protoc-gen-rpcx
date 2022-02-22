@@ -48,6 +48,8 @@ type PackClient struct {
 func (c *PackClient) Signin(ctx context.Context,
 	in *SigninReq) (*SigninRes, error) {
 	out := new(SigninRes)
+	// 客户端调用
+	fmt.Printf("客户端调用signin\n")
 	err := c.c.Call(ctx, "Pack.Signin", in, out)
 	return out, err
 }
