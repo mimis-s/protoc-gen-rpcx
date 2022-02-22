@@ -7,8 +7,8 @@ dmitri.shuralyov.com/html/belt v0.0.0-20180602232347-f7d459c86be0/go.mod h1:JLBr
 dmitri.shuralyov.com/service/change v0.0.0-20181023043359-a85b471d5412/go.mod h1:a1inKt/atXimZ4Mv927x+r7UpyzRUf4emIoiiSC2TN4=
 dmitri.shuralyov.com/state v0.0.0-20180228185332-28bcc343414c/go.mod h1:0PRwlb0D6DFvNNtx+9ybjezNCa8XF0xaYcETyp6rHWU=
 git.apache.org/thrift.git v0.0.0-20180902110319-2566ecd5d999/go.mod h1:fPE2ZNJGynbRyZ4dJvy6G277gSllfV2HJqblrnkyeyg=
-gitee.com/mimis/golang-tool v0.0.0-20220221042744-83839401fe42 h1:jYK6gjLP8rYDdORM4rOgEw5O77vbgS0ye1n8iDr/Vmk=
-gitee.com/mimis/golang-tool v0.0.0-20220221042744-83839401fe42/go.mod h1:jLRJHmI0/wDq7d7ORh06DeEXj5H+E9H7BsTWj5Me1Ks=
+gitee.com/mimis/golang-tool v0.0.0-20220222054036-e9b9a897a689 h1:ql7+kLWJenWDFYFPVC+hYGMScC9Od2BBxKQTtQ2NDhw=
+gitee.com/mimis/golang-tool v0.0.0-20220222054036-e9b9a897a689/go.mod h1:jLRJHmI0/wDq7d7ORh06DeEXj5H+E9H7BsTWj5Me1Ks=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/ChimeraCoder/gojson v1.1.0/go.mod h1:nYbTQlu6hv8PETM15J927yM0zGj3njIldp72UT1MqSw=
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=

@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	listenAddr string   = "localhost:8578"
+	listenAddr string   = "localhost:8579"
 	addr       string   = "localhost:8579"
 	etcdAddrs  []string = []string{"192.168.1.165:2379"}
 	isLocal    bool     = false
