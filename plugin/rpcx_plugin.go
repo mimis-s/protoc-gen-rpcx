@@ -68,6 +68,8 @@ func (p *netrpcPlugin) buildServiceSpec(svc *descriptor.ServiceDescriptorProto) 
 func (p *netrpcPlugin) genServiceCode(svc *descriptor.ServiceDescriptorProto) {
 	spec := p.buildServiceSpec(svc)
 
+	serverName := `var serverName string = "` + strings.ToLower(spec.ServiceName) + `"`
+	p.P(serverName)
 	// 客户端
 	{
 		var buf bytes.Buffer

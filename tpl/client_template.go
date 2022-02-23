@@ -1,7 +1,6 @@
 package tpl
 
 var TmpClient string = `{{$root := .}}
-var serverName string = "pack"
 
 type {{.ServiceName}}ClientInterface interface {
 	{{- range $_, $m := .MethodList}}
