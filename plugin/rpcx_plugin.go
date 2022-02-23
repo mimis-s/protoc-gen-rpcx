@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"gitee.com/mimis/protoc-gen-rpcx/generator"
+	"gitee.com/mimis/protoc-gen-rpcx/tpl"
 
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
 )
@@ -70,13 +71,14 @@ func (p *netrpcPlugin) genServiceCode(svc *descriptor.ServiceDescriptorProto) {
 	// 客户端
 	{
 		var buf bytes.Buffer
-		t, err := template.ParseFiles(GetPath() + "/template/rpcx_client.tpl")
-		if err != nil {
-			fmt.Printf("template.ParseFiles is err:%v\n", err)
-			return
-		}
+		// t, err := template.ParseFiles("template/rpcx_client.tpl")
+		// if err != nil {
+		// 	fmt.Printf("template.ParseFiles is err:%v\n", err)
+		// 	return
+		// }
+		t := template.Must(template.New("").Parse(tpl.TmpClient))
 
-		err = t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
+		err := t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
 		if err != nil {
 			fmt.Printf("Execute is err:%v\n", err)
 			return
@@ -87,13 +89,14 @@ func (p *netrpcPlugin) genServiceCode(svc *descriptor.ServiceDescriptorProto) {
 	// 服务器
 	{
 		var buf bytes.Buffer
-		t, err := template.ParseFiles(GetPath() + "/template/rpcx_service.tpl")
-		if err != nil {
-			fmt.Printf("template.ParseFiles is err:%v\n", err)
-			return
-		}
+		// t, err := template.ParseFiles("template/rpcx_service.tpl")
+		// if err != nil {
+		// 	fmt.Printf("template.ParseFiles is err:%v\n", err)
+		// 	return
+		// }
+		t := template.Must(template.New("").Parse(tpl.TmpService))
 
-		err = t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
+		err := t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
 		if err != nil {
 			fmt.Printf("Execute is err:%v\n", err)
 			return
