@@ -4,10 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
-	"os"
-	"os/exec"
 	"path"
-	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -17,15 +14,7 @@ import (
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
 )
 
-func GetPath() string {
-	file, _ := exec.LookPath(os.Args[0])
-	path, _ := filepath.Abs(file)
-	index := strings.LastIndex(path, string(os.PathSeparator))
-	return path[:index]
-}
-
 const (
-	//apiPkgPath     = "github.com/joymicro/go-joymicro/v3/api"
 	contextPkgPath = "context"
 	clientPkgPath  = "gitee.com/mimis/golang-tool/rpcx/client"
 	serverPkgPath  = "gitee.com/mimis/golang-tool/rpcx/service"
@@ -52,8 +41,8 @@ type ServiceMethodSpec struct {
 // 解析每个服务的ServiceSpec元信息
 func (p *netrpcPlugin) buildServiceSpec(svc *descriptor.ServiceDescriptorProto) *ServiceSpec {
 	spec := &ServiceSpec{ServiceName: generator.CamelCase(svc.GetName())}
-
 	for _, m := range svc.Method {
+		// TypeName旨在判断生成文件是否在包路径，如果在那么就返回方法名，不在就在方法名上面加一个包路径
 		spec.MethodList = append(spec.MethodList, ServiceMethodSpec{
 			MethodName:     generator.CamelCase(m.GetName()),
 			InputTypeName:  p.TypeName(p.ObjectNamed(m.GetInputType())),

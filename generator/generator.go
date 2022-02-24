@@ -648,7 +648,6 @@ func (g *Generator) defaultGoPackage() GoPackageName {
 // It also defines unique package names for all imported files.
 func (g *Generator) SetPackageNames() {
 	g.outputImportPath = g.genFiles[0].importPath
-
 	defaultPackageNames := make(map[GoImportPath]GoPackageName)
 	for _, f := range g.genFiles {
 		if _, p, ok := f.goPackageOption(); ok {
@@ -710,6 +709,7 @@ func (g *Generator) WrapTypes() {
 	for _, n := range g.Request.FileToGenerate {
 		genFileNames[n] = true
 	}
+
 	for _, f := range g.Request.ProtoFile {
 		fd := &FileDescriptor{
 			FileDescriptorProto: f,
@@ -718,6 +718,7 @@ func (g *Generator) WrapTypes() {
 		}
 		// The import path may be set in a number of ways.
 		if substitution, ok := g.ImportMap[f.GetName()]; ok {
+			// 输入参数中有依赖路径
 			// Command-line: M=foo.proto=quux/bar.
 			//
 			// Explicit mapping of source file to import path.
@@ -739,6 +740,7 @@ func (g *Generator) WrapTypes() {
 			// Last resort when nothing else is available.
 			fd.importPath = GoImportPath(path.Dir(f.GetName()))
 		}
+
 		// We must wrap the descriptors before we wrap the enums
 		fd.desc = wrapDescriptors(fd)
 		g.buildNestedDescriptors(fd.desc)
@@ -749,6 +751,7 @@ func (g *Generator) WrapTypes() {
 		g.allFiles = append(g.allFiles, fd)
 		g.allFilesByName[f.GetName()] = fd
 	}
+
 	for _, fd := range g.allFiles {
 		fd.imp = wrapImported(fd, g)
 	}
@@ -1084,6 +1087,7 @@ func (g *Generator) GenerateAllFiles() {
 			Name:    proto.String(fname),
 			Content: proto.String(g.String()),
 		})
+		// 存储注释(不需要)
 		// if g.annotateCode {
 		// 	// Store the generated code annotations in text, as the protoc plugin protocol requires that
 		// 	// strings contain valid UTF-8.
