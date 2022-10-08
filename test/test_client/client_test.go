@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"gitee.com/mimis/protoc-gen-rpcx/proto"
+	"github.com/mimis-s/protoc-gen-rpcx/proto"
 )
 
 var (

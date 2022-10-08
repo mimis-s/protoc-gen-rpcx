@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"os"
 
-	"gitee.com/mimis/protoc-gen-rpcx/generator"
-	_ "gitee.com/mimis/protoc-gen-rpcx/plugin"
 	"github.com/golang/protobuf/proto"
+	"github.com/mimis-s/protoc-gen-rpcx/generator"
+	_ "github.com/mimis-s/protoc-gen-rpcx/plugin"
 )
 
 // 以下内容都来自protoc-gen-go/main.go

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/mimis/golang-tool/rpcx/service"
-	"gitee.com/mimis/protoc-gen-rpcx/proto"
+	"github.com/mimis-s/golang_tools/rpcx/service"
+	"github.com/mimis-s/protoc-gen-rpcx/proto"
 )
 
 var (

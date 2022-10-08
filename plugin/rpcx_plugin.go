@@ -8,16 +8,16 @@ import (
 	"strconv"
 	"strings"
 
-	"gitee.com/mimis/protoc-gen-rpcx/generator"
-	"gitee.com/mimis/protoc-gen-rpcx/tpl"
+	"github.com/mimis-s/protoc-gen-rpcx/generator"
+	"github.com/mimis-s/protoc-gen-rpcx/tpl"
 
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
 )
 
 const (
 	contextPkgPath = "context"
-	clientPkgPath  = "gitee.com/mimis/golang-tool/rpcx/client"
-	serverPkgPath  = "gitee.com/mimis/golang-tool/rpcx/service"
+	clientPkgPath  = "github.com/mimis-s/golang_tools/rpcx/client"
+	serverPkgPath  = "github.com/mimis-s/golang_tools/rpcx/service"
 )
 
 var (
