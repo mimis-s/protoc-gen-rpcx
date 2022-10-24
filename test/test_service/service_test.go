@@ -29,7 +29,7 @@ func (s *Server) Signin(ctx context.Context, req *proto.SigninReq, res *proto.Si
 
 func Init() *Server {
 	s := new(Server)
-	sManager, err := proto.NewPackServiceAndRun(listenAddr, addr, etcdAddrs, s, "")
+	sManager, err := proto.NewPackServiceAndRun(listenAddr, addr, etcdAddrs, s, "", false)
 	if err != nil {
 		panic(err)
 	}

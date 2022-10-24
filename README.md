@@ -5,6 +5,9 @@
 简单修改generator文件中的goFileName函数的name，自定义工具生成的文件名字
 修改CommandLineParameters函数里面的pluginList := ""为空
 
+每个服务都要在使用的时候定义一个client, 这个操作有点麻烦, 所以这里把客户端写成单例模式,
+然后加入对于本地调用和rpc调用的判断, 应用场景扩展到本地和远程都能进行调用
+
 #### 使用
 
 <p>1：编译代码：go build -o protoc-gen-rpcx main.go</p>

@@ -8,23 +8,31 @@ type {{.ServiceName}}ClientInterface interface {
 	{{- end}}
 }
 
-func New{{.ServiceName}}Client(etcdAddrs []string, timeout time.Duration, etcdBasePath string) {{.ServiceName}}ClientInterface {
-	c := client.New(serverName, etcdAddrs, timeout, etcdBasePath)
-
-	return &{{.ServiceName}}Client{
-		c: c,
-	}
-}
-
-type {{.ServiceName}}Client struct {
+// rpcx客户端
+type {{.ServiceName}}RpcxClient struct {
 	c *client.ClientManager
 }
 
 {{range $_, $m := .MethodList}}
-func (c *{{$root.ServiceName}}Client) {{$m.MethodName}}(ctx context.Context, 
+func (c *{{$root.ServiceName}}RpcxClient) {{$m.MethodName}}(ctx context.Context, 
 	in *{{$m.InputTypeName}}) (*{{$m.OutputTypeName}}, error) {
     out := new({{$m.OutputTypeName}})
 	err := c.c.Call(ctx, "{{$m.MethodName}}", in, out)
     return out, err
 }
-{{end}}`
+{{end}}
+
+// 本地调用客户端
+type {{.ServiceName}}LocalClient struct {
+}
+
+{{range $_, $m := .MethodList}}
+func (c *{{$root.ServiceName}}LocalClient) {{$m.MethodName}}(ctx context.Context, 
+	in *{{$m.InputTypeName}}) (*{{$m.OutputTypeName}}, error) {
+    out := new({{$m.OutputTypeName}})
+	err := {{$root.ServiceName}}ServiceLocal.{{$m.MethodName}}(ctx, in, out)
+    return out, err
+}
+{{end}}
+
+`

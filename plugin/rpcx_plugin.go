@@ -59,6 +59,25 @@ func (p *netrpcPlugin) genServiceCode(svc *descriptor.ServiceDescriptorProto) {
 
 	serverName := `var serverName string = "` + strings.ToLower(spec.ServiceName) + `"`
 	p.P(serverName)
+
+	// 客户端实例
+	{
+		var buf bytes.Buffer
+		// t, err := template.ParseFiles("template/rpcx_client.tpl")
+		// if err != nil {
+		// 	fmt.Printf("template.ParseFiles is err:%v\n", err)
+		// 	return
+		// }
+		t := template.Must(template.New("").Parse(tpl.TmpClientHandler))
+
+		err := t.Execute(&buf, spec) // 把spec传入模板，返回初始化好的模板buf
+		if err != nil {
+			fmt.Printf("Execute is err:%v\n", err)
+			return
+		}
+		p.P(buf.String()) // 把模板的内容写入生成的proto文件里面
+	}
+
 	// 客户端
 	{
 		var buf bytes.Buffer
@@ -135,6 +154,7 @@ func (p *netrpcPlugin) genImportCode(file *generator.FileDescriptor) {
 	p.P("\"time\"")
 	// p.P("\"reflect\"")
 	// p.P("\"encoding/json\"")
+	p.P("\"sync\"")
 	p.P(contextPkg, " ", strconv.Quote(path.Join(p.Generator.ImportPrefix, contextPkgPath)))
 	p.P(clientPkg, " ", strconv.Quote(path.Join(p.Generator.ImportPrefix, clientPkgPath)))
 	p.P(serverPkg, " ", strconv.Quote(path.Join(p.Generator.ImportPrefix, serverPkgPath)))
