@@ -12,7 +12,7 @@ import (
 var (
 	listenAddr string   = "localhost:8579"
 	addr       string   = "localhost:8579"
-	etcdAddrs  []string = []string{"192.168.1.165:2379"}
+	etcdAddrs  []string = []string{"192.168.1.98:2379"}
 	isLocal    bool     = false
 )
 
@@ -33,6 +33,12 @@ func Init() *Server {
 	if err != nil {
 		panic(err)
 	}
+	go func() {
+		err = sManager.Run()
+		if err != nil {
+			panic(err)
+		}
+	}()
 	s.S = sManager
 	return s
 }

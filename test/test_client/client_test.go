@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	etcdAddrs []string = []string{"192.168.1.165:2379"}
+	etcdAddrs []string = []string{"192.168.1.98:2379"}
 )
 
 func Init() {
