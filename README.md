@@ -8,6 +8,10 @@
 每个服务都要在使用的时候定义一个client, 这个操作有点麻烦, 所以这里把客户端写成单例模式,
 然后加入对于本地调用和rpc调用的判断, 应用场景扩展到本地和远程都能进行调用
 
+#### 关键函数使用说明
+New{{.ServiceName}}ServiceAndRun: 创建一个本地或者rpcx服务器监听等待客户端连接
+Register{{.ServiceName}}Service:  将已经创建好的rpcx服务器对象绑定etcd, 启动监听(本地调用时不会创建rpcx对象, 调用函数返回nil)
+
 #### 使用
 
 <p>1：编译代码：go build -o protoc-gen-rpcx main.go</p>
