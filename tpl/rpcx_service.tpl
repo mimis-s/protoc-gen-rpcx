@@ -7,7 +7,9 @@ type {{.ServiceName}}ServiceInterface interface {
 }
 
 func Register{{.ServiceName}}Service(s *service.ServerManage, hdlr {{.ServiceName}}ServiceInterface) error {
-    return s.RegisterOneService(serverName, hdlr)
+	// 本地调用的时候使用(rpc本地客户端对应调用本地服务器)
+	{{.ServiceName}}ServiceLocal = hdlr
+	return s.RegisterOneService(serverName, hdlr)
 }
 
 func New{{.ServiceName}}ServiceAndRun(listenAddr, exposeAddr string, etcdAddrs []string, handler {{.ServiceName}}ServiceInterface, etcdBasePath string) (*service.ServerManage, error) {

@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.5.2
-	github.com/mimis-s/golang_tools v0.0.0-20230718083955-8d9c107c1780
+	github.com/mimis-s/golang_tools v0.0.0-20230720054936-f6e4167ee58e
 )
 
 require (

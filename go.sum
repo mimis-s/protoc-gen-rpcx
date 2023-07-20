@@ -253,6 +253,8 @@ github.com/mimis-s/golang_tools v0.0.0-20221008061553-881744d9a377 h1:OrGYFtHBVQ
 github.com/mimis-s/golang_tools v0.0.0-20221008061553-881744d9a377/go.mod h1:o47Yph68A1ghymYOTLG7v9Gp30tMcdNLv6Tg/ohAcnE=
 github.com/mimis-s/golang_tools v0.0.0-20230718083955-8d9c107c1780 h1:r/ol9BNTPlSWlavYQ3zx7PF/StCzeds1zF+lqFH/b4A=
 github.com/mimis-s/golang_tools v0.0.0-20230718083955-8d9c107c1780/go.mod h1:3zZ537bsLKsxIEvg1FmK/FY2crsI46J6xXjxTDmiLMY=
+github.com/mimis-s/golang_tools v0.0.0-20230720054936-f6e4167ee58e h1:P8eTdWEehX2BLff//VPOyo7cn3pT7SqZBXJAZogBHsE=
+github.com/mimis-s/golang_tools v0.0.0-20230720054936-f6e4167ee58e/go.mod h1:3zZ537bsLKsxIEvg1FmK/FY2crsI46J6xXjxTDmiLMY=
 github.com/mitchellh/cli v1.1.0/go.mod h1:xcISNoH86gajksDmfB23e/pu+B+GeFRMYmoHXxx3xhI=
 github.com/mitchellh/go-homedir v1.1.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
 github.com/mitchellh/go-testing-interface v1.0.0/go.mod h1:kRemZodwjscx+RGhAo8eIhFbs2+BFgRtFPeD/KE+zxI=
